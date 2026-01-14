@@ -11,6 +11,7 @@
     "skill:export": "node skills/frontend/scripts/ssr-routes-export.js",
     "skill:smoke": "bash skills/frontend/scripts/ssr-api-check.sh",
     "skill:ssr": "bash skills/frontend/scripts/ssr-test-render.sh",
+    "skill:negative": "BASE_URL=http://localhost:3001 npx playwright test skills/frontend/tests/negative.spec.ts",
     "skill:e2e": "BASE_URL=http://localhost:3001 npx playwright test skills/frontend/tests/e2e.spec.ts",
     "skill:test": "npm run skill:serve && npm run skill:export && npm run skill:smoke && npm run skill:ssr && npm run skill:e2e && npm run skill:stop"
   },
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.57.0",
+    "html-validate": "^10.5.0",
     "playwright": "^1.57.0",
     "wait-on": "^9.0.3"
   }

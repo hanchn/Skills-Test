@@ -1,0 +1,38 @@
+<%- include('partials/header') %>
+
+<div class="card">
+    <h2>HTML 结构异常示例</h2>
+    <p>这个页面故意包含了很多 HTML 语法错误，用于测试自动化脚本的健壮性和检测能力。</p>
+
+    <!-- 1. 未闭合的标签 -->
+    <div class="error-section">
+        <h3>未闭合的标签</h3>
+        <p>这是一个段落，但是下面的列表项没有正确闭合
+        <ul>
+            <li>未闭合的列表项
+            <li>另一个项
+        </ul>
+    <!-- div 没有闭合 -->
+    
+    <!-- 2. DOM 不对称 / 嵌套错误 -->
+    <div class="error-section">
+        <h3>DOM 嵌套错误</h3>
+        <p><span>块级元素在内联元素中：<div>我是 div</div></span></p>
+    </div>
+
+    <!-- 3. 多余的角标 -->
+    <div class="error-section">
+        <h3>多余的角标</h3>
+        <p>这里有两个 << 角标</p>
+        <br>>
+        <<div class="broken">多左括号</div>
+    </div>
+
+    <!-- 4. 少对称符 -->
+    <div class="error-section">
+        <h3>属性引号缺失</h3>
+        <input type="text value="没有右引号>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -49,6 +49,21 @@ app.post('/api/submit', (req, res) => {
   }, 1000);
 });
 
+// === 异常测试路由 ===
+app.get('/bad/html', (req, res) => {
+  res.render('broken-html', { title: 'HTML 结构异常 - 自动化测试' });
+});
+
+app.get('/bad/logic', (req, res) => {
+  // 可以在这里捕获错误并自定义 500 页面，或者让 Express 默认处理
+  try {
+    res.render('broken-logic', { title: '逻辑异常 - 自动化测试' });
+  } catch (err) {
+    // 实际生产中通常有全局错误处理中间件
+    res.status(500).send('Server Error: Template rendering failed');
+  }
+});
+
 app.listen(port, () => {
   console.log(`服务器运行在 http://localhost:${port}`);
 });
