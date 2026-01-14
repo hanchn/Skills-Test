@@ -1,0 +1,61 @@
+<%- include('partials/header') %>
+
+<div class="card">
+    <h2>动态内容示例</h2>
+    <p>自动化测试挑战：</p>
+    <ul>
+        <li>点击按钮动态添加列表项。</li>
+        <li>定位并点击新添加项中的“删除”按钮。</li>
+        <li>验证列表项数量的变化。</li>
+    </ul>
+
+    <div class="form-group">
+        <input type="text" id="newItemInput" placeholder="输入新项目名称" style="width: 70%; display: inline-block;">
+        <button id="addItemBtn" class="btn" style="width: 25%;">添加项目</button>
+    </div>
+
+    <ul id="item-list">
+        <!-- 初始项 -->
+        <li>
+            <span>示例项目 1</span>
+            <button class="delete-btn">删除</button>
+        </li>
+    </ul>
+</div>
+
+<script>
+    const itemList = document.getElementById('item-list');
+    const addItemBtn = document.getElementById('addItemBtn');
+    const newItemInput = document.getElementById('newItemInput');
+
+    // 添加项目
+    addItemBtn.addEventListener('click', function() {
+        const text = newItemInput.value.trim();
+        if (text) {
+            // 模拟随机延迟，增加测试难度
+            setTimeout(() => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${text}</span>
+                    <button class="delete-btn">删除</button>
+                `;
+                itemList.appendChild(li);
+                newItemInput.value = '';
+            }, 500);
+        } else {
+            alert('请输入项目名称');
+        }
+    });
+
+    // 删除项目 (事件委托)
+    itemList.addEventListener('click', function(e) {
+        if (e.target.classList.contains('delete-btn')) {
+            if(confirm('确定要删除吗？')) {
+                const li = e.target.parentElement;
+                itemList.removeChild(li);
+            }
+        }
+    });
+</script>
+
+<%- include('partials/footer') %>
