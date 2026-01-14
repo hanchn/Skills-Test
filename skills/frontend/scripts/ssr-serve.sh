@@ -5,6 +5,12 @@ set -e
 PORT=3001
 LOG_FILE="skills/frontend/outputs/server.log"
 
+# Clean up existing port to avoid EADDRINUSE
+if lsof -ti:$PORT >/dev/null; then
+  echo "Port $PORT is in use. Killing existing process..."
+  lsof -ti:$PORT | xargs kill -9
+fi
+
 echo "Starting server on port $PORT..."
 # 启动服务，强制设置测试环境
 NODE_ENV=test PORT=$PORT node server.js > "$LOG_FILE" 2>&1 &
