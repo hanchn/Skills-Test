@@ -10,7 +10,6 @@ mkdir -p skills/frontend/outputs/report
 ROUTES_FILE=skills/frontend/outputs/routes.json \
 BASE_URL=http://localhost:3001 \
 npx playwright test skills/frontend/tests/ssr.spec.ts \
-  --reporter=html:skills/frontend/outputs/report/ssr \
-  --headed=false
+  --reporter=html:skills/frontend/outputs/report/ssr
 
 echo "SSR Render Tests Passed!"
