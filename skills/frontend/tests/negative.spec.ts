@@ -16,7 +16,7 @@ const htmlValidate = new HtmlValidate({
 test.describe('Negative Testing & Validation', () => {
   
   test('Should detect HTML structure errors in /bad/html', async ({ page }) => {
-    const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+    const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
     const response = await page.goto(baseUrl + '/bad/html');
     
     expect(response?.status()).toBe(200);
@@ -42,7 +42,7 @@ test.describe('Negative Testing & Validation', () => {
   });
 
   test('Should handle 500 errors gracefully in /bad/logic', async ({ page }) => {
-    const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+    const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
     
     // 预期页面会返回 500
     const response = await page.goto(baseUrl + '/bad/logic');

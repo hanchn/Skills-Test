@@ -16,9 +16,10 @@ test.describe('SSR Render Integrity (No-JS)', () => {
   // 关键配置：禁用 JavaScript
   test.use({ javaScriptEnabled: false });
 
-  routes.forEach((routeUrl) => {
+  routes.forEach((routeUrl: string) => {
     test(`Run: ${routeUrl} should render correctly`, async ({ page }) => {
-      const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+      // 优先使用 config 中的 baseURL，如果没有则回退到 localhost:3001 (与 serve 脚本一致)
+      const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
       const response = await page.goto(baseUrl + routeUrl);
 
       // 1. 状态码断言

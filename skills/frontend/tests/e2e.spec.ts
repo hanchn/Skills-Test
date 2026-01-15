@@ -5,7 +5,7 @@ test.describe('Critical User Flows', () => {
   test.use({ javaScriptEnabled: true });
 
   test('Form Submission', async ({ page }) => {
-    const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+    const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
     await page.goto(baseUrl + '/form');
     
     // 填写表单
@@ -19,14 +19,14 @@ test.describe('Critical User Flows', () => {
   });
   
   test('Carousel Interaction', async ({ page }) => {
-     const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+     const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
      await page.goto(baseUrl + '/carousel');
      // 验证 Swiper 存在
      await expect(page.locator('.swiper')).toBeVisible();
   });
 
   test('Dynamic List Interaction', async ({ page }) => {
-    const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+    const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
     await page.goto(baseUrl + '/dynamic');
 
     await page.fill('#newItemInput', 'New Item');
