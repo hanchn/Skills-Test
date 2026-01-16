@@ -19,3 +19,4 @@ skills/frontend/outputs/
 # Editor
 .vscode/
 .idea/
+.test-results/

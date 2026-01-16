@@ -6,7 +6,7 @@ test.describe('Critical User Flows', () => {
 
   test('Form Submission', async ({ page }) => {
     const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
-    await page.goto(baseUrl + '/form');
+    await page.goto(baseUrl + '/form', { waitUntil: 'domcontentloaded' });
     
     // 填写表单
     await page.fill('input[name="username"]', 'testuser');
