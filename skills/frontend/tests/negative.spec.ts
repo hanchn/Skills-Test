@@ -58,8 +58,29 @@ test.describe('Negative Testing & Validation', () => {
     console.table(errors);
     console.log('==============================\n');
     
-    // 断言存在错误
-    expect(errors.length).toBeGreaterThan(0);
+    // 2. 将错误摘要添加到报告头部 (Annotations)
+    if (errors.length > 0) {
+      test.info().annotations.push({
+        type: 'HTML Validation Issue',
+        description: `Found ${errors.length} issues in ${'/bad/html'}. See attachments for details.`
+      });
+    }
+
+    // 3. 将详细错误列表渲染为 Markdown 表格，更易读
+    const markdownTable = [
+      '| Rule | Message | Line | Column |',
+      '| :--- | :--- | :--- | :--- |',
+      ...errors.map(e => `| \`${e.rule}\` | ${e.message.replace(/\|/g, '\\|')} | ${e.line} | ${e.column} |`)
+    ].join('\n');
+
+    // 无论测试是否失败，都附加报告
+    await test.info().attach('html-validation-report.md', {
+      body: markdownTable,
+      contentType: 'text/markdown'
+    });
+    
+    // 强制测试失败：如果存在 HTML 错误，则测试不通过 (Report 会变红)
+    expect(errors, `Found ${errors.length} HTML validation issues`).toHaveLength(0);
   });
 
   test('Should handle 500 errors gracefully in /bad/logic', async ({ page }) => {

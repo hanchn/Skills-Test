@@ -25,6 +25,14 @@ ln -sfn "html_$TIMESTAMP" "skills/frontend/outputs/report/latest"
 echo ""
 echo "Test finished with exit code: $EXIT_CODE"
 echo "Report generated at: $REPORT_DIR"
-echo "To view report: npx playwright show-report $REPORT_DIR"
+
+# 使用 Playwright 自带的命令展示报告 (会自动启动服务并打开浏览器)
+# 注意：这会阻塞终端，直到用户按 Ctrl+C
+if [ -t 1 ]; then
+    echo "Launching report viewer..."
+    npx playwright show-report "$REPORT_DIR"
+else
+    echo "To view report: npx playwright show-report $REPORT_DIR"
+fi
 
 exit $EXIT_CODE

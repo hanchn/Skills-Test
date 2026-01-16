@@ -72,6 +72,24 @@ test.describe('SSR Render Integrity (No-JS)', () => {
         }));
         console.warn(`\n[HTML Validation Warning] Found ${errors.length} issues in ${routeUrl}:`);
         console.table(errors);
+
+        // 2. 将警告添加到报告头部 (Annotations)
+        test.info().annotations.push({
+          type: 'HTML Validation Warning',
+          description: `Found ${errors.length} issues in ${routeUrl}. See attachments for details.`
+        });
+
+        // 3. 将详细错误列表渲染为 Markdown 表格
+        const markdownTable = [
+          '| Route | Rule | Message | Line |',
+          '| :--- | :--- | :--- | :--- |',
+          ...errors.map(e => `| \`${e.route}\` | \`${e.rule}\` | ${e.message.replace(/\|/g, '\\|')} | ${e.line} |`)
+        ].join('\n');
+
+        await test.info().attach(`html-warnings-${routeUrl.replace(/\//g, '-')}.md`, {
+          body: markdownTable,
+          contentType: 'text/markdown'
+        });
         
         // 这里的策略是：打印警告但不让测试失败，除非是严重的结构错误
         // 如果想强制 HTML 完美，可以取消注释下面这行：

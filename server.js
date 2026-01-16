@@ -5,7 +5,8 @@ const port = process.env.PORT || 3000;
 
 // 设置 EJS 为模板引擎
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+// 支持多个视图目录：先找 skills/frontend/views (测试用)，再找 views (主项目)
+app.set('views', [path.join(__dirname, 'skills/frontend/views'), path.join(__dirname, 'views')]);
 
 // 解析请求体
 app.use(express.urlencoded({ extended: true }));
@@ -13,6 +14,9 @@ app.use(express.json());
 
 // 设置静态文件目录
 app.use(express.static(path.join(__dirname, 'public')));
+
+// 托管 Playwright 测试报告 (方便开发调试)
+app.use('/report', express.static(path.join(__dirname, 'skills/frontend/outputs/report/latest')));
 
 // 路由
 app.get('/', (req, res) => {
