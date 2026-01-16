@@ -20,7 +20,18 @@ test.describe('SSR Render Integrity (No-JS)', () => {
     test(`Run: ${routeUrl} should render correctly`, async ({ page }) => {
       // 优先使用 config 中的 baseURL，如果没有则回退到 localhost:3001 (与 serve 脚本一致)
       const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
-      const response = await page.goto(baseUrl + routeUrl);
+      
+      // 拦截并阻止外部 CDN 请求，避免因网络问题导致超时
+      await page.route('**/*', route => {
+        const url = route.request().url();
+        if (url.includes('cdn.jsdelivr.net')) {
+          return route.abort();
+        }
+        return route.continue();
+      });
+
+      // 使用 domcontentloaded 即可，不需要等待所有资源加载完成
+      const response = await page.goto(baseUrl + routeUrl, { waitUntil: 'domcontentloaded' });
 
       // 1. 状态码断言
       expect(response?.status()).toBe(200);

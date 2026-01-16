@@ -1,32 +1,33 @@
 {
-  "name": "skilltest",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node server.js",
-    "test": "npm run skill:test",
-    "skill:serve": "bash skills/frontend/scripts/ssr-serve.sh",
-    "skill:stop": "bash skills/frontend/scripts/ssr-stop.sh",
-    "skill:export": "node skills/frontend/scripts/ssr-routes-export.js",
-    "skill:smoke": "bash skills/frontend/scripts/ssr-api-check.sh",
-    "skill:ssr": "npx playwright test skills/frontend/tests/ssr.spec.ts",
-    "skill:negative": "npx playwright test skills/frontend/tests/negative.spec.ts",
-    "skill:e2e": "npx playwright test skills/frontend/tests/e2e.spec.ts",
-    "skill:report": "npx playwright show-report skills/frontend/outputs/report/html",
-    "skill:test": "npm run skill:serve && npm run skill:export && npm run skill:smoke && npm run skill:ssr && npm run skill:e2e && npm run skill:negative && npm run skill:stop"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "ejs": "^3.1.9",
-    "express": "^4.18.2"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.57.0",
-    "html-validate": "^10.5.0",
-    "playwright": "^1.57.0",
-    "wait-on": "^9.0.3"
-  }
+	"name": "skilltest",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node server.js",
+		"test": "npm run skill:test",
+		"skill:serve": "bash skills/frontend/scripts/ssr-serve.sh",
+		"skill:stop": "bash skills/frontend/scripts/ssr-stop.sh",
+		"skill:export": "node skills/frontend/scripts/ssr-routes-export.js",
+		"skill:smoke": "bash skills/frontend/scripts/ssr-api-check.sh",
+		"skill:ssr": "npx playwright test skills/frontend/tests/ssr.spec.ts",
+		"skill:negative": "npx playwright test skills/frontend/tests/negative.spec.ts",
+		"skill:e2e": "npx playwright test skills/frontend/tests/e2e.spec.ts",
+		"skill:report": "npx playwright show-report skills/frontend/outputs/report/html",
+		"skill:test": "npm run skill:serve && npm run skill:export && npm run skill:smoke && npm run skill:ssr && npm run skill:e2e && npm run skill:negative && npm run skill:stop"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"ejs": "^3.1.9",
+		"express": "^4.18.2"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.57.0",
+		"html-validate": "^10.5.0",
+		"playwright": "^1.57.0",
+		"wait-on": "^9.0.3"
+	},
+	"projectId": "439"
 }
