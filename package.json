@@ -11,9 +11,9 @@
 		"skill:export": "node skills/frontend/scripts/ssr-routes-export.js",
 		"skill:smoke": "bash skills/frontend/scripts/ssr-api-check.sh",
 		"skill:ssr": "npx playwright test skills/frontend/tests/ssr.spec.ts",
-		"skill:negative": "npx playwright test skills/frontend/tests/negative.spec.ts",
 		"skill:e2e": "npx playwright test skills/frontend/tests/e2e.spec.ts",
-		"skill:report": "npx playwright show-report skills/frontend/outputs/report/latest",
+    "skill:negative": "bash skills/frontend/scripts/ssr-test-negative.sh",
+    "skill:report": "npx playwright show-report skills/frontend/outputs/report/latest",
     "skill:test": "bash skills/frontend/scripts/ssr-test-with-history.sh"
   },
 	"keywords": [],
