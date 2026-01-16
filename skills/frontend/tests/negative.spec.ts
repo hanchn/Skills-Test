@@ -9,7 +9,9 @@ const htmlValidate = new HtmlValidate({
     'element-required-content': 'error',
     'no-dup-attr': 'error',
     'no-trailing-whitespace': 'off', // 忽略空白字符问题
-    'void-style': 'off'
+    'void-style': 'off',
+    'mismatched-close-tag': 'error', // 确保闭合标签匹配
+    'no-raw-characters': ['error', { relaxed: true }] // 检查未转义的特殊字符，如 < >
   }
 });
 
@@ -45,8 +47,16 @@ test.describe('Negative Testing & Validation', () => {
     expect(report.valid).toBe(false);
     
     // 检查是否包含特定的错误类型（示例）
-    const errors = report.results[0].messages.map(m => m.message);
-    console.log('Detected errors:', JSON.stringify(errors, null, 2));
+    const errors = report.results[0].messages.map(m => ({
+      rule: m.ruleId,
+      message: m.message,
+      line: m.line,
+      column: m.column
+    }));
+    
+    console.log('\n=== HTML Validation Report ===');
+    console.table(errors);
+    console.log('==============================\n');
     
     // 断言存在错误
     expect(errors.length).toBeGreaterThan(0);
