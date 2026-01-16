@@ -13,9 +13,9 @@
 		"skill:ssr": "npx playwright test skills/frontend/tests/ssr.spec.ts",
 		"skill:negative": "npx playwright test skills/frontend/tests/negative.spec.ts",
 		"skill:e2e": "npx playwright test skills/frontend/tests/e2e.spec.ts",
-		"skill:report": "npx playwright show-report skills/frontend/outputs/report/html",
-		"skill:test": "npm run skill:serve && npm run skill:export && npm run skill:smoke && npm run skill:ssr && npm run skill:e2e && npm run skill:negative && npm run skill:stop"
-	},
+		"skill:report": "npx playwright show-report skills/frontend/outputs/report/latest",
+    "skill:test": "bash skills/frontend/scripts/ssr-test-with-history.sh"
+  },
 	"keywords": [],
 	"author": "",
 	"license": "ISC",

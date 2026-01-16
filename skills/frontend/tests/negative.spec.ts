@@ -15,9 +15,20 @@ const htmlValidate = new HtmlValidate({
 
 test.describe('Negative Testing & Validation', () => {
   
+  // 拦截并阻止外部 CDN 请求
+  test.beforeEach(async ({ page }) => {
+    await page.route('**/*', route => {
+      const url = route.request().url();
+      if (url.includes('cdn.jsdelivr.net')) {
+        return route.abort();
+      }
+      return route.continue();
+    });
+  });
+
   test('Should detect HTML structure errors in /bad/html', async ({ page }) => {
     const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
-    const response = await page.goto(baseUrl + '/bad/html');
+    const response = await page.goto(baseUrl + '/bad/html', { waitUntil: 'domcontentloaded' });
     
     expect(response?.status()).toBe(200);
 
@@ -45,7 +56,7 @@ test.describe('Negative Testing & Validation', () => {
     const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
     
     // 预期页面会返回 500
-    const response = await page.goto(baseUrl + '/bad/logic');
+    const response = await page.goto(baseUrl + '/bad/logic', { waitUntil: 'domcontentloaded' });
     
     expect(response?.status()).toBe(500);
     

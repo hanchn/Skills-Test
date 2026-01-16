@@ -22,7 +22,7 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['list'],
-    ['html', { outputFolder: 'skills/frontend/outputs/report/html', open: 'never' }]
+    ['html', { outputFolder: process.env.PLAYWRIGHT_HTML_REPORT || 'skills/frontend/outputs/report/html', open: 'never' }]
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {

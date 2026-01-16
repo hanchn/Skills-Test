@@ -4,6 +4,17 @@ test.describe('Critical User Flows', () => {
   // 开启 JS
   test.use({ javaScriptEnabled: true });
 
+  // 拦截并阻止外部 CDN 请求，避免因网络问题导致超时
+  test.beforeEach(async ({ page }) => {
+    await page.route('**/*', route => {
+      const url = route.request().url();
+      if (url.includes('cdn.jsdelivr.net')) {
+        return route.abort();
+      }
+      return route.continue();
+    });
+  });
+
   test('Form Submission', async ({ page }) => {
     const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
     await page.goto(baseUrl + '/form', { waitUntil: 'domcontentloaded' });
@@ -20,14 +31,14 @@ test.describe('Critical User Flows', () => {
   
   test('Carousel Interaction', async ({ page }) => {
      const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
-     await page.goto(baseUrl + '/carousel');
+     await page.goto(baseUrl + '/carousel', { waitUntil: 'domcontentloaded' });
      // 验证 Swiper 存在
      await expect(page.locator('.swiper')).toBeVisible();
   });
 
   test('Dynamic List Interaction', async ({ page }) => {
     const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
-    await page.goto(baseUrl + '/dynamic');
+    await page.goto(baseUrl + '/dynamic', { waitUntil: 'domcontentloaded' });
 
     await page.fill('#newItemInput', 'New Item');
     await page.click('#addItemBtn');
