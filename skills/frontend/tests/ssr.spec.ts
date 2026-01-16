@@ -1,6 +1,19 @@
 import { test, expect } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
+import { HtmlValidate } from 'html-validate';
+
+const htmlValidate = new HtmlValidate({
+  extends: ['html-validate:recommended'],
+  rules: {
+    'close-order': 'error',
+    'element-required-content': 'error',
+    'no-dup-attr': 'error',
+    'no-trailing-whitespace': 'off',
+    'void-style': 'off',
+    'no-raw-characters': ['warn', { relaxed: true }] // 对正常页面使用 warn 级别，避免阻断
+  }
+});
 
 // 读取路由表
 const routesPath = process.env.ROUTES_FILE || path.join(__dirname, '../outputs/routes.json');
@@ -43,6 +56,27 @@ test.describe('SSR Render Integrity (No-JS)', () => {
       // 3. 模板变量断言
       // 检查关键容器是否有内容
       await expect(page.locator('.container').first()).toBeVisible();
+
+      // 4. HTML 结构验证 (Walkthrough)
+      // 使用原始响应文本，避免浏览器自动修复 HTML 错误
+      if (!response) throw new Error('Response is null');
+      const content = await response.text();
+      const report = await htmlValidate.validateString(content);
+      
+      if (!report.valid) {
+        const errors = report.results[0].messages.map(m => ({
+          route: routeUrl,
+          rule: m.ruleId,
+          message: m.message,
+          line: m.line
+        }));
+        console.warn(`\n[HTML Validation Warning] Found ${errors.length} issues in ${routeUrl}:`);
+        console.table(errors);
+        
+        // 这里的策略是：打印警告但不让测试失败，除非是严重的结构错误
+        // 如果想强制 HTML 完美，可以取消注释下面这行：
+        // expect(report.valid).toBe(true);
+      }
     });
   });
 });

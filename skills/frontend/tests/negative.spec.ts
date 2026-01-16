@@ -33,8 +33,9 @@ test.describe('Negative Testing & Validation', () => {
     
     expect(response?.status()).toBe(200);
 
-    // 获取页面完整 HTML
-    const content = await page.content();
+    // 获取页面原始 HTML (避免浏览器自动修复)
+    if (!response) throw new Error('Response is null');
+    const content = await response.text();
 
     // 使用 html-validate 验证
     const report = await htmlValidate.validateString(content);
