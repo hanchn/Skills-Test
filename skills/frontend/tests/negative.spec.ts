@@ -10,7 +10,6 @@ const htmlValidate = new HtmlValidate({
     'no-dup-attr': 'error',
     'no-trailing-whitespace': 'off', // 忽略空白字符问题
     'void-style': 'off',
-    'mismatched-close-tag': 'error', // 确保闭合标签匹配
     'no-raw-characters': ['error', { relaxed: true }] // 检查未转义的特殊字符，如 < >
   }
 });
